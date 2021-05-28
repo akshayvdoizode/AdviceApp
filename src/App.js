@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [details, setDetails] = React.useState([]);
+  const fetchData = () => {
+    try {
+      fetch(`https://api.adviceslip.com/advice`)
+        .then((res) => res.json())
+        .then((data) => {
+          setDetails(data.slip.advice);
+        });
+      console.log(details);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // fetchData();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="card">
+        <h1 className="heading" style={{ textTransform: "capitalize" }}>
+          {details}
+        </h1>
+        <button className="button" onClick={fetchData}>
+          <span>GIVE ME ADVICE!</span>
+        </button>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
